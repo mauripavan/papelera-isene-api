@@ -1,5 +1,5 @@
-const S = require("sequelize");
-const db = require("../db");
+const S = require('sequelize');
+const db = require('../db');
 
 class Product extends S.Model {}
 
@@ -14,7 +14,7 @@ Product.init(
     pi: {
       type: S.INTEGER,
     },
-    pi: {
+    pp: {
       type: S.INTEGER,
     },
     earningPI: {
@@ -29,11 +29,17 @@ Product.init(
     updatedDate: {
       type: S.STRING,
     },
+    iva: {
+      type: S.BOOLEAN,
+    },
+    quantity: {
+      type: S.INTEGER,
+    },
   },
   {
     sequelize: db,
-    modelName: "product",
-  }
+    modelName: 'product',
+  },
 );
 
 module.exports = Product;

@@ -1,12 +1,13 @@
-const express = require("express");
-const productsRouter = express.Router();
-const { Product } = require("../models");
+const express = require('express');
 
-productsRouter.get("/", (req, res) => {
+const productsRouter = express.Router();
+const { Product } = require('../models');
+
+productsRouter.get('/', (req, res) => {
   Product.findAll().then((result) => res.send(result).status(200));
 });
 
-productsRouter.post("/", (req, res) => {
+productsRouter.post('/', (req, res) => {
   const {
     description,
     cost,
@@ -16,6 +17,8 @@ productsRouter.post("/", (req, res) => {
     earningPP,
     stock,
     updatedDate,
+    iva,
+    quantity,
   } = req.body;
   Product.create({
     description,
@@ -26,6 +29,8 @@ productsRouter.post("/", (req, res) => {
     pp,
     stock,
     updatedDate,
+    iva,
+    quantity,
   }).then((result) => {
     res.send(result).status(201);
   });
