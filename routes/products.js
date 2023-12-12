@@ -16,6 +16,8 @@ productsRouter.post("/", (req, res) => {
     earningPP,
     stock,
     updatedDate,
+    iva,
+    quantity,
   } = req.body;
   Product.create({
     description,
@@ -26,6 +28,8 @@ productsRouter.post("/", (req, res) => {
     pp,
     stock,
     updatedDate,
+    iva,
+    quantity,
   }).then((result) => {
     res.send(result).status(201);
   });

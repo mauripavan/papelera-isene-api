@@ -29,6 +29,12 @@ Product.init(
     updatedDate: {
       type: S.STRING,
     },
+    iva: {
+      type: S.BOOLEAN,
+    },
+    quantity: {
+      type: S.INTEGER,
+    },
   },
   {
     sequelize: db,
