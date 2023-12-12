@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', routes);
 
-db.sync().then(() => {
+db.sync({ force: false }).then(() => {
   app.listen(8080, () => {
     console.log('App listen on http://localhost:8080 🚀');
   });
