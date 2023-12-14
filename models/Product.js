@@ -25,12 +25,14 @@ Product.init(
     },
     stock: {
       type: S.BOOLEAN,
+      defaultValue: true,
     },
     updatedDate: {
       type: S.STRING,
     },
     iva: {
       type: S.BOOLEAN,
+      defaultValue: true,
     },
     quantity: {
       type: S.INTEGER,
