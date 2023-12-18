@@ -115,11 +115,9 @@ productsRouter.put('/increment/:id', async (req, res) => {
   try {
     // Check if the product exists
     const existingProduct = await Product.findByPk(id);
-
     if (!existingProduct) {
       return res.status(404).send('Product not found');
     }
-
     // Update the product
     await Product.update(
       { cost, pi, pp },
@@ -127,10 +125,35 @@ productsRouter.put('/increment/:id', async (req, res) => {
         where: { id },
       },
     );
-
     // Fetch the updated product
     const updatedProduct = await Product.findByPk(id);
+    return res.status(200).send(updatedProduct);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Internal Server Error');
+  }
+});
 
+// Update product stock
+productsRouter.put('/stock/:id', async (req, res) => {
+  const { id } = req.params;
+  const { stock } = req.body;
+
+  try {
+    // Check if the product exists
+    const existingProduct = await Product.findByPk(id);
+    if (!existingProduct) {
+      return res.status(404).send('Product not found');
+    }
+    // Update the product
+    await Product.update(
+      { stock },
+      {
+        where: { id },
+      },
+    );
+    // Fetch the updated product
+    const updatedProduct = await Product.findByPk(id);
     return res.status(200).send(updatedProduct);
   } catch (error) {
     console.error(error);
