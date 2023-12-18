@@ -108,7 +108,7 @@ productsRouter.delete('/:id', async (req, res) => {
 });
 
 // Update product price
-productsRouter.put('/:id', async (req, res) => {
+productsRouter.put('/increment/:id', async (req, res) => {
   const { id } = req.params;
   const { cost, pi, pp } = req.body;
 

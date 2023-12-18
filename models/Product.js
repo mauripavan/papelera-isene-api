@@ -9,13 +9,13 @@ Product.init(
       type: S.STRING,
     },
     cost: {
-      type: S.INTEGER,
+      type: S.FLOAT,
     },
     pi: {
-      type: S.INTEGER,
+      type: S.FLOAT,
     },
     pp: {
-      type: S.INTEGER,
+      type: S.FLOAT,
     },
     earningPI: {
       type: S.INTEGER,
