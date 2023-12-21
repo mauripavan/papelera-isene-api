@@ -14,6 +14,21 @@ productsRouter.get('/', async (req, res) => {
     });
 });
 
+// Filter products by stock
+productsRouter.get('/stock', async (req, res) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        stock: false,
+      },
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // Search products
 productsRouter.get('/search', async (req, res) => {
   const { query } = req.query;
