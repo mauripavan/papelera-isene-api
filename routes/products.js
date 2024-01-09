@@ -6,7 +6,9 @@ const { Product } = require('../models');
 
 // Get all products
 productsRouter.get('/', async (req, res) => {
-  Product.findAll()
+  Product.findAll({
+    order: [['description', 'ASC']],
+  })
     .then((result) => res.send(result).status(200))
     .catch((error) => {
       console.error(error);
@@ -21,6 +23,7 @@ productsRouter.get('/stock', async (req, res) => {
       where: {
         stock: false,
       },
+      order: [['description', 'ASC']],
     });
     res.status(200).json(products);
   } catch (error) {
@@ -44,7 +47,6 @@ productsRouter.get('/search', async (req, res) => {
         },
       },
     });
-
     return res.json({ matchedProducts });
   } catch (error) {
     console.error(error);
@@ -116,6 +118,60 @@ productsRouter.delete('/:id', async (req, res) => {
     }
     // Item deleted successfully
     return res.status(200).send('Product deleted');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
+productsRouter.put('/increment', async (req, res) => {
+  const productsToUpdate = req.body;
+
+  try {
+    if (!Array.isArray(productsToUpdate)) {
+      return res
+        .status(400)
+        .send('Invalid request format. Expected an array of products.');
+    }
+
+    // Extract product ids from the array
+    const productIds = productsToUpdate.map((product) => product.id);
+
+    // Check if all products exist
+    const existingProducts = await Product.findAll({
+      where: {
+        id: {
+          [Op.in]: productIds,
+        },
+      },
+    });
+
+    if (existingProducts.length !== productIds.length) {
+      return res.status(404).send('One or more products not found');
+    }
+
+    // Update the products
+    for (const {
+      id, cost, pi, pp,
+    } of productsToUpdate) {
+      Product.update(
+        { cost, pi, pp },
+        {
+          where: { id },
+        },
+      );
+    }
+
+    // Fetch the updated products
+    const updatedProducts = await Product.findAll({
+      where: {
+        id: {
+          [Op.in]: productIds,
+        },
+      },
+    });
+
+    return res.status(200).send(updatedProducts);
   } catch (error) {
     console.error(error);
     return res.status(500).send('Internal Server Error');
