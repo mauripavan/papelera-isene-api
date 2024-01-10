@@ -6,48 +6,96 @@ const { Product } = require('../models');
 
 // Get all products
 productsRouter.get('/', async (req, res) => {
-  Product.findAll({
-    order: [['description', 'ASC']],
-  })
-    .then((result) => res.send(result).status(200))
-    .catch((error) => {
-      console.error(error);
-      return res.status(500).send('Internal Server Error');
-    });
-});
+  const page = parseInt(req.query.page, 10) || 1;
+  const pageSize = parseInt(req.query.pageSize, 10) || 10;
 
+  try {
+    const { count, rows } = await Product.findAndCountAll({
+      order: [['description', 'ASC']],
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
+    });
+
+    const totalPages = Math.ceil(count / pageSize);
+
+    res.json({
+      data: rows,
+      pagination: {
+        page,
+        pageSize,
+        totalItems: count,
+        totalPages,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 // Filter products by stock
 productsRouter.get('/stock', async (req, res) => {
+  const page = parseInt(req.query.page, 10) || 1;
+  const pageSize = parseInt(req.query.pageSize, 10) || 10;
+
   try {
-    const products = await Product.findAll({
+    const { count, rows } = await Product.findAndCountAll({
       where: {
         stock: false,
       },
       order: [['description', 'ASC']],
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
     });
-    res.status(200).json(products);
+
+    const totalPages = Math.ceil(count / pageSize);
+
+    res.json({
+      data: rows,
+      pagination: {
+        page,
+        pageSize,
+        totalItems: count,
+        totalPages,
+      },
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
 // Search products
 productsRouter.get('/search', async (req, res) => {
   const { query } = req.query;
+  const page = parseInt(req.query.page, 10) || 1;
+  const pageSize = parseInt(req.query.pageSize, 10) || 10;
+
   try {
     if (!query) {
       return res.status(400).json({ error: 'Missing search query' });
     }
 
-    const matchedProducts = await Product.findAll({
+    const { count, rows } = await Product.findAndCountAll({
       where: {
         description: {
           [Op.iLike]: `%${query}%`,
         },
       },
+      order: [['description', 'ASC']],
+      offset: (page - 1) * pageSize,
+      limit: pageSize,
     });
-    return res.json({ matchedProducts });
+    const totalPages = Math.ceil(count / pageSize);
+
+    return res.json({
+      data: rows,
+      pagination: {
+        page,
+        pageSize,
+        totalItems: count,
+        totalPages,
+      },
+    });
   } catch (error) {
     console.error(error);
     return res.status(500).send(error);
