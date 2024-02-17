@@ -280,4 +280,52 @@ productsRouter.put('/stock/:id', async (req, res) => {
   }
 });
 
+// Update product
+productsRouter.put('/update/:productId', async (req, res) => {
+  const { productId } = req.params;
+  const {
+    description,
+    cost,
+    pi,
+    pp,
+    earningPI,
+    earningPP,
+    stock,
+    updatedDate,
+    iva,
+    quantity,
+  } = req.body;
+
+  try {
+    const [updatedCount] = await Product.update(
+      {
+        description,
+        cost,
+        earningPI,
+        earningPP,
+        pi,
+        pp,
+        stock,
+        updatedDate,
+        iva,
+        quantity,
+      },
+      {
+        where: { id: productId },
+      },
+    );
+
+    if (updatedCount === 0) {
+      return res.status(404).send('Product not found');
+    }
+
+    const updatedProduct = await Product.findByPk(productId);
+
+    return res.status(200).send(updatedProduct);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Internal Server Error');
+  }
+});
+
 module.exports = productsRouter;
