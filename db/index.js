@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
+const config = require('./config/config');
 
-const sequelize = new Sequelize('papelera_isene_db', null, null, {
-  dialect: 'postgres',
-  host: 'localhost',
-});
+const sequelize = new Sequelize(config.development);
 
 module.exports = sequelize;
