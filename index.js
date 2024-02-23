@@ -15,7 +15,7 @@ app.use('/api', routes);
 const port = process.env.PORT || 4000;
 
 db.sync({ force: false }).then(() => {
-  app.listen(port, () => {
+  app.listen(port, '0.0.0.0', () => {
     console.log(`App listen on http://0.0.0.0:${port}  🚀`);
   });
 });
