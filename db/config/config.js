@@ -3,7 +3,7 @@ require('dotenv').config();
 const config = {
   development: {
     use_env_variable: 'DATABASE_URL',
-    dialect: 'postgresql',
+    dialect: 'postgres',
     logging: false,
   },
 };
