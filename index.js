@@ -12,9 +12,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: true, credentials: true }));
 app.use('/api', routes);
 
+const port = process.env.PORT || 4000;
+
 db.sync({ force: false }).then(() => {
-  app.listen(8080, () => {
-    console.log('App listen on http://localhost:8080 🚀');
+  app.listen(port, () => {
+    console.log(`App listen on http://localhost:${port}  🚀`);
   });
 });
 
