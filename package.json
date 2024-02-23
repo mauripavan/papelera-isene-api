@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon indes.js",
+    "start": "nodemon index.js",
     "lint": "eslint --quiet --fix",
     "prepare": "husky install",
     "precommit": "bash .husky/pre-commit",
