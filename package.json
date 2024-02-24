@@ -9,9 +9,8 @@
     "prepare": "husky install",
     "precommit": "bash .husky/pre-commit",
     "make-pretty": "prettier --write --ignore-path .gitignore .",
-    "dev": "set NODE_ENV=development&& nodemon index.js",
-    "prod": "set NODE_ENV=production&& nodemon index.js"
-  },
+    "dev": "export NODE_ENV=development && nodemon index.js",
+    "prod": "export NODE_ENV=production && nodemon index.js"  },
   "keywords": [],
   "author": "",
   "license": "ISC",
