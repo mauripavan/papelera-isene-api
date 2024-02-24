@@ -7,6 +7,7 @@ const config = {
     logging: false,
     hostname: 'dpg-cncn5cacn0vc73f2u7n0-a',
     ssl: {
+      require: true,
       rejectUnauthorized: false,
     },
   },
