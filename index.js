@@ -21,7 +21,7 @@ app.use('/api', routes);
 const port = config.PORT || 8080;
 
 db.sync({ force: false }).then(() => {
-  app.listen(config.PORT, config.HOST, () => {
+  app.listen(config.PORT, '0.0.0.0', () => {
     console.log(`Example app listening on port ${port}`);
   });
 });
