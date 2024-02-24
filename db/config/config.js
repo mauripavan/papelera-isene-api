@@ -6,7 +6,7 @@ const config = {
     dialect: 'postgres',
     logging: false,
     hostname: 'dpg-cncf4i2cn0vc73f1ffhg-a',
-    host: '127.0.0.1',
+    host: '0.0.0.0',
   },
 };
 module.exports = config;
