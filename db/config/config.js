@@ -5,7 +5,7 @@ const config = {
     use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     logging: false,
-    host: '0.0.0.0',
+    hostname: 'dpg-cncf4i2cn0vc73f1ffhg-a',
   },
 };
 module.exports = config;
