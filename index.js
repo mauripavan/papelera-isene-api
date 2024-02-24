@@ -9,7 +9,7 @@ const db = require('./db');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use('/api', routes);
 
 const port = process.env.PORT || 4000;
