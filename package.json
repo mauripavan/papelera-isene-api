@@ -8,7 +8,9 @@
     "lint": "eslint --quiet --fix",
     "prepare": "husky install",
     "precommit": "bash .husky/pre-commit",
-    "make-pretty": "prettier --write --ignore-path .gitignore ."
+    "make-pretty": "prettier --write --ignore-path .gitignore .",
+    "dev": "set NODE_ENV=development&& nodemon index.js",
+    "prod": "set NODE_ENV=production&& nodemon index.js"
   },
   "keywords": [],
   "author": "",

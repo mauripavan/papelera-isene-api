@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const config = require('../config');
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,
@@ -7,9 +8,9 @@ const sequelize = new Sequelize(
   {
     dialect: 'postgres',
     logging: false,
-    host: process.env.DB_HOST,
+    host: process.env.HOSTNAME,
     dialectOptions: {
-      ssl: true,
+      ssl: config.NODE_ENV === 'production',
       rejectUnauthorized: false,
     },
   },
