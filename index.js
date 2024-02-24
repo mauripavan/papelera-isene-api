@@ -6,7 +6,7 @@ const app = express();
 const cors = require('cors');
 const routes = require('./routes');
 const db = require('./db');
-const { HOST, PORT, FRONTEND_URL } = require('./config');
+const { DB_HOST, DB_PORT, FRONTEND_URL } = require('./config');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -14,15 +14,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: FRONTEND_URL,
-    credentials: true,
   }),
 );
 app.use('/api', routes);
 
-const port = PORT || 8080;
+const port = DB_PORT;
 
 db.sync({ force: false }).then(() => {
-  app.listen(PORT, HOST, () => {
+  app.listen(DB_PORT, DB_HOST, () => {
     console.log(`Example app listening on port ${port}`);
   });
 });
