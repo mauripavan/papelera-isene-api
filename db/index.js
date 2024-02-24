@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
     logging: false,
     host: config.DB_HOSTNAME,
     dialectOptions: {
-      ssl: config.SSL,
+      ssl: config.DB_SSL,
       rejectUnauthorized: false,
     },
   },

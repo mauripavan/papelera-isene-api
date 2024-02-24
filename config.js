@@ -6,5 +6,5 @@ module.exports = {
   DB_HOST: process.env.DB_HOST || '127.0.0.1',
   DB_HOSTNAME: process.env.DB_HOSTNAME || 'localhost',
   FRONTEND_URL: process.env.FRONTEND_URL || true,
-  SSL: process.env.SSL || false,
+  DB_SSL: process.env.DB_SSL || false,
 };
