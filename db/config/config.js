@@ -5,7 +5,7 @@ const config = {
     use_env_variable: 'DATABASE_URL',
     dialect: 'postgres',
     logging: false,
-    hostname: 'dpg-cncf4i2cn0vc73f1ffhg-a',
+    hostname: 'dpg-cncn5cacn0vc73f2u7n0-a',
     host: '0.0.0.0',
   },
 };
