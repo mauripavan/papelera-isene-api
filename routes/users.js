@@ -6,11 +6,16 @@ const { User } = require('../models');
 
 // Register new user
 usersRouter.post('/', async (req, res, next) => {
-  User.create(req.body)
-    .then((user) => {
-      res.status(201).send(user);
-    })
-    .catch(next);
+  try {
+    const newUser = await User.create(req.body);
+    res.status(201).send(newUser);
+  } catch (error) {
+    if (error.name === 'SequelizeUniqueConstraintError') {
+      res.status(400).send({ error: 'Ya existe un usuario con ese email.' });
+    } else {
+      next(error);
+    }
+  }
 });
 
 // Login user
@@ -24,6 +29,16 @@ usersRouter.post(
 usersRouter.post('/logout', async (req, res, next) => {
   req.logOut();
   res.sendStatus(200).catch(next);
+});
+
+// Get all users
+usersRouter.get('/', async (req, res, next) => {
+  try {
+    const users = await User.findAll();
+    res.status(200).send(users);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = usersRouter;

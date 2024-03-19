@@ -42,9 +42,9 @@ User.init(
 User.beforeCreate(async (user) => {
   try {
     const salt = await bcrypt.genSalt(16);
-    user.setDataValue('salt', salt); // Set salt using Sequelize's method
-    const hash = await user.hash(user.password, salt); // Use user.hash() instead of this.hash()
-    user.setDataValue('password', hash); // Set password using Sequelize's method
+    user.setDataValue('salt', salt);
+    const hash = await User.hash(user.password, salt);
+    user.setDataValue('password', hash);
   } catch (error) {
     throw new Error(error);
   }
