@@ -41,14 +41,14 @@ passport.use(
       usernameField: 'email',
       passwordField: 'password',
     },
-    ((email, password, done) => {
+    (email, password, done) => {
       User.findOne({ where: { email } })
         .then((user) => {
           if (!user) {
             return done(null, false);
           }
 
-          return user.hash(password, user.salt).then((hash) => {
+          return User.hash(password, user.salt).then((hash) => {
             if (hash !== user.password) {
               return done(null, false);
             }
@@ -57,7 +57,7 @@ passport.use(
           });
         })
         .catch(done);
-    }),
+    },
   ),
 );
 passport.serializeUser((user, done) => {
