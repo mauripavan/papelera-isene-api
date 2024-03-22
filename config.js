@@ -7,4 +7,5 @@ module.exports = {
   DB_HOSTNAME: process.env.DB_HOSTNAME || 'localhost',
   FRONTEND_URL: process.env.FRONTEND_URL || true,
   DB_SSL: process.env.DB_SSL || false,
+  JWT_SECRET: 'papelera',
 };

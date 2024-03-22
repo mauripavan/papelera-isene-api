@@ -1,5 +1,7 @@
 const express = require('express');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config');
 
 const usersRouter = express.Router();
 const { User } = require('../models');
@@ -19,26 +21,21 @@ usersRouter.post('/', async (req, res, next) => {
 });
 
 // Login user
-usersRouter.post(
-  '/login',
-  passport.authenticate('local'),
-  async (req, res, next) => res.send(req.user).catch(next),
-);
 
-// Logout user
-usersRouter.post('/logout', async (req, res, next) => {
-  req.logOut();
-  res.sendStatus(200).catch(next);
-});
-
-// Get all users
-usersRouter.get('/', async (req, res, next) => {
-  try {
-    const users = await User.findAll();
-    res.status(200).send(users);
-  } catch (error) {
-    next(error);
-  }
+usersRouter.post('/login', async (req, res) => {
+  // eslint-disable-next-line consistent-return
+  passport.authenticate('local', { session: false }, (err, user) => {
+    if (err || !user) {
+      return res.status(401).send({ error: 'Authentication failed' });
+    }
+    req.login(user, { session: false }, (error) => {
+      if (error) {
+        res.send(error);
+      }
+      const token = jwt.sign(user.toJSON(), JWT_SECRET);
+      return res.json({ user, token });
+    });
+  })(req, res);
 });
 
 module.exports = usersRouter;
